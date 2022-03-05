@@ -17,6 +17,10 @@ export default class SocketHandler {
             }
         })
 
+        scene.socket.on('disconnect', () => {
+            console.log('disconnected...')
+        })
+
         scene.socket.on('winnaar', (arg1, arg2) => {
             if (arg2 == scene.socket.id) {
                 scene.background.depth = 1000
@@ -50,7 +54,7 @@ export default class SocketHandler {
         })
 
         // zorgt dat alles wordt geüpdate als de server dit wilt
-        scene.socket.on('kaarten', (arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8) => {
+        scene.socket.on('kaarten', (arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9) => {
             scene.buttonPass.destroy(true)
             scene.gespeeldeKaartImage.destroy(true)
             scene.soortImage.destroy(true)
@@ -59,6 +63,7 @@ export default class SocketHandler {
             if (scene.deck != '') {
                 scene.deck.destroy(true)
             }
+            scene.pass = arg9
             scene.spelrichting = arg7
             scene.aantalSpelers = arg6
             scene.deck = scene.add.group()
@@ -74,15 +79,15 @@ export default class SocketHandler {
             // laat zien welke soort het is als er een boer of joker is opgelegd
             if (scene.gespeeldeKaart['trueNumber'] == 13|| scene.gespeeldeKaart['trueNumber'] == 0){
                 if (scene.gespeeldeKaart['soort'] != 'special') {
-                    scene.soortText = scene.add.text(510, 65, 'SOORT: ', { font: '40px Arial'})
+                    scene.soortText = scene.add.text(510, 95, 'SOORT: ', { font: '40px Arial'})
                     if (scene.gespeeldeKaart['soort'] == 'klaveren') {
-                        scene.soortImage = scene.add.image(720, 85, 'Klaver')
+                        scene.soortImage = scene.add.image(720, 105, 'Klaver')
                     }else if (scene.gespeeldeKaart['soort'] == 'harten') {
-                        scene.soortImage = scene.add.image(720, 85, 'Hart')
+                        scene.soortImage = scene.add.image(720, 105, 'Hart')
                     }else if (scene.gespeeldeKaart['soort'] == 'schoppen') {
-                        scene.soortImage = scene.add.image(720, 85, 'Schop')
+                        scene.soortImage = scene.add.image(720, 105, 'Schop')
                     }else if (scene.gespeeldeKaart['soort'] == 'ruiten') {
-                        scene.soortImage = scene.add.image(720, 85, 'Ruit')
+                        scene.soortImage = scene.add.image(720, 105, 'Ruit')
                     }
                     scene.soortImage.scale = 0.15
                 }
@@ -109,10 +114,12 @@ export default class SocketHandler {
 
             //zorgt dat de geselecteerde kaart weer terug gaat als er op geklikt wordt
             scene.geselecteerdeKaartImage.on('pointerdown', function(event) {
-                scene.geselecteerdeKaartImage.destroy(true)
-                scene.playText.destroy(true)
-                scene.buttonPlay.destroy(true)
-                scene.socket.emit('geselecteerdeKaartTerug')
+                if (scene.pointer.leftButtonDown() && scene.pass == false){
+                    scene.geselecteerdeKaartImage.destroy(true)
+                    scene.playText.destroy(true)
+                    scene.buttonPlay.destroy(true)
+                    scene.socket.emit('geselecteerdeKaartTerug')
+                }
             })
 
             // zorgt ervoor dat de kaart gespeeld wordt (als dat kan)
@@ -169,7 +176,7 @@ export default class SocketHandler {
 
                 //maakt de geselecteerde kaart aan
                 child.on('pointerdown', function(pointer) {
-                    if ((scene.pointer.leftButtonDown()  && scene.gespeeldeKaart['soort'] != 'special' && scene.myTurn == true) || (scene.pointer.leftButtonDown()  && scene.gespeeldeKaart['trueNumber'] == 0 && scene.myTurn == true)){
+                    if (scene.pointer.leftButtonDown() && scene.gespeeldeKaart['trueNumber'] != 13 && scene.myTurn == true && scene.pass == false){
                         scene.index
                         for (var i = 0; i < scene.decks[scene.playerNumber - 1].length; i++) {
                             if (scene.decks[scene.playerNumber - 1][i]['kaart'] == child.texture.key) {
@@ -417,27 +424,27 @@ export default class SocketHandler {
                 scene.stoel3.depth = 100
                 if (scene.playerNumber == 1) {
                     scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial', color: '#00FF00'})
-                    scene.aantalKaarten2 = scene.add.text(215, 200, scene.amountCards[1], {font: '25px Arial'})
-                    scene.aantalKaarten3 = scene.add.text(110, 200, amountCards[2], {font: '25px Arial'})
-                    scene.aantalKaarten4 = scene.add.text(164, 220, amountCards[3], {font: '25px Arial'})
+                    scene.aantalKaarten2 = scene.add.text(230, 154, scene.amountCards[1], {font: '25px Arial'})
+                    scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial'})
+                    scene.aantalKaarten4 = scene.add.text(90, 154, scene.amountCards[3], {font: '25px Arial'})
                 }
                 if (scene.playerNumber == 2) {
                     scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
-                    scene.aantalKaarten2 = scene.add.text(215, 200, scene.amountCards[1], {font: '25px Arial', color: '#00FF00'})
-                    scene.aantalKaarten3 = scene.add.text(110, 200, scene.amountCards[2], {font: '25px Arial'})
-                    scene.aantalKaarten4 = scene.add.text(164, 220, scene.amountCards[3], {font: '25px Arial'})
+                    scene.aantalKaarten2 = scene.add.text(230, 154, scene.amountCards[1], {font: '25px Arial', color: '#00FF00'})
+                    scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial'})
+                    scene.aantalKaarten4 = scene.add.text(90, 154, scene.amountCards[3], {font: '25px Arial'})
                 }
                 if (scene.playerNumber == 3) {
                     scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
-                    scene.aantalKaarten2 = scene.add.text(215, 200, scene.amountCards[1], {font: '25px Arial'})
-                    scene.aantalKaarten3 = scene.add.text(110, 200, scene.amountCards[2], {font: '25px Arial', color: '#00FF00'})
-                    scene.aantalKaarten4 = scene.add.text(164, 220, scene.amountCards[3], {font: '25px Arial'})
+                    scene.aantalKaarten2 = scene.add.text(230, 154, scene.amountCards[1], {font: '25px Arial'})
+                    scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial', color: '#00FF00'})
+                    scene.aantalKaarten4 = scene.add.text(90, 154, scene.amountCards[3], {font: '25px Arial'})
                 }
-                if (scene.playerNumber == 3) {
+                if (scene.playerNumber == 4) {
                     scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
-                    scene.aantalKaarten2 = scene.add.text(215, 200, scene.amountCards[1], {font: '25px Arial'})
-                    scene.aantalKaarten3 = scene.add.text(110, 200, scene.amountCards[2], {font: '25px Arial'})
-                    scene.aantalKaarten4 = scene.add.text(164, 220, scene.amountCards[3], {font: '25px Arial', color: '#00FF00'})
+                    scene.aantalKaarten2 = scene.add.text(230, 154, scene.amountCards[1], {font: '25px Arial'})
+                    scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial'})
+                    scene.aantalKaarten4 = scene.add.text(90, 154, scene.amountCards[3], {font: '25px Arial', color: '#00FF00'})
                 }
                 scene.aantalKaarten1.depth = 4
                 scene.aantalKaarten2.depth = 4

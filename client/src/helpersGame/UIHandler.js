@@ -55,15 +55,8 @@ export default class UIHandler {
             scene.penaltyText = scene.add.text(-1000, -1000, 'CARDS TO GRAB: ', { font: '40px Arial'})
             scene.takePenaltyText = scene.add.text(-1000, -1000, 'TAKE CARDS', { font: '40px Arial'})
         }
-
-
-
-        this.buildGameText = () => {
-            scene.dealCards = scene.add.text(200, 200, "Deal Cards", { font: '14px Arial'})
-        }
-        
+ 
         this.buildUI = () => {
-            this.buildGameText()
             this.buildBackground()
             this.buildRest()
         }

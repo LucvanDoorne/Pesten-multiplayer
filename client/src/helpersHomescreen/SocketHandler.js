@@ -35,7 +35,6 @@ export default class SocketHandler {
 
         scene.socket.on('lobbyFull', (arg) => {
             scene.players = arg
-            console.log(scene.players)
             if (scene.players[4] == scene.socket.id){
                 scene.background.depth = 1000
                 scene.fullscreen.depth = 1001
