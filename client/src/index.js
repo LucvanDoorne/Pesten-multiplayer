@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import io from 'socket.io-client'
 import Room from './scenes/roomCode'
 import Homescreen from './scenes/homescreen.js';
 import Game from "./scenes/game.js"

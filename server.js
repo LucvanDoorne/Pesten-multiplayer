@@ -95,8 +95,17 @@ io.on('connection', function (socket) {
     console.log('A user connected: ' + socket.id)
     // room
     /*socket.on('joinRoom', arg => {
-        room = arg
-        socket.join(room)
+        var roomID
+        for (var i = 0; i <= room.length; i++) {
+            if (room[i] == arg) {
+                roomID = i
+            }else if (i == room.length && roomID == undefined) {
+                room.push(arg)
+                roomID = i
+            }
+        }
+        users.push({'id': socket.id, 'roomid': roomID})
+        players[roomID].push(socket.id)
     })*/
 
 
@@ -240,10 +249,8 @@ io.on('connection', function (socket) {
     socket.on('keuzeSoort', (arg) => {
         gespeeldeKaart['soort'] = arg
         console.log(gespeeldeKaart)
-        if (gespeeldeKaart['trueNumber'] == 13) {
-            winnaar()
-            beurtFunctie()
-        }
+        winnaar()
+        beurtFunctie()
         io.emit('kaarten', decks, gespeeldeKaart, beurt, players, penalty, totalPlayers, spelrichting, geselecteerdeKaart, pass)
     })
 
@@ -303,7 +310,7 @@ function beurtFunctie(){
 
 function checken(){
     if (decks[beurt - 1].length == 0) {
-        if (geselecteerdeKaart[0]['soort'] != 'special' && geselecteerdeKaart[0]['trueNumber'] != 1  && geselecteerdeKaart[0]['trueNumber'] != 2  && geselecteerdeKaart[0]['trueNumber'] != 7  && geselecteerdeKaart[0]['trueNumber'] != 8) {
+        if (geselecteerdeKaart[0]['soort'] != 'special' && geselecteerdeKaart[0]['trueNumber'] != 1  && geselecteerdeKaart[0]['trueNumber'] != 2  && geselecteerdeKaart[0]['trueNumber'] != 7  && geselecteerdeKaart[0]['trueNumber'] != 8 && penalty < 1) {
             if (gespeeldeKaart['trueNumber'] == geselecteerdeKaart[0]['trueNumber'] || gespeeldeKaart['soort'] == geselecteerdeKaart[0]['soort']){
                 winnaar()
                 beurtFunctie()
@@ -313,9 +320,21 @@ function checken(){
                 shuffle(pakstapel)
                 opgelegd = true
             }    
+        }else if (penalty > 1 && pass == true){
+            if (geselecteerdeKaart[0]['soort'] != 'special' && geselecteerdeKaart[0]['trueNumber'] != 1  && geselecteerdeKaart[0]['trueNumber'] != 2  && geselecteerdeKaart[0]['trueNumber'] != 7  && geselecteerdeKaart[0]['trueNumber'] != 8) {
+                if (gespeeldeKaart['trueNumber'] == geselecteerdeKaart[0]['trueNumber'] || gespeeldeKaart['soort'] == geselecteerdeKaart[0]['soort']){
+                    winnaar()
+                    beurtFunctie()
+                    pakstapel.push(gespeeldeKaart)
+                    gespeeldeKaart = geselecteerdeKaart[0]
+                    geselecteerdeKaart = ''
+                    shuffle(pakstapel)
+                    opgelegd = true
+                } 
+            }
         }
     }else if (decks[beurt - 1].length > 0){
-        if ((gespeeldeKaart['trueNumber'] == geselecteerdeKaart[0]['trueNumber'] || gespeeldeKaart['soort'] == geselecteerdeKaart[0]['soort'] || geselecteerdeKaart[0]['soort'] == 'special') && penalty < 1){
+        if ((gespeeldeKaart['trueNumber'] == geselecteerdeKaart[0]['trueNumber'] || gespeeldeKaart['soort'] == geselecteerdeKaart[0]['soort'] || geselecteerdeKaart[0]['soort'] == 'special') && penalty < 1 ){
             if (geselecteerdeKaart[0]['trueNumber'] == 0) {
                 penalty = penalty + 5
             }
@@ -340,6 +359,33 @@ function checken(){
             geselecteerdeKaart = ''
             shuffle(pakstapel)
             opgelegd = true
+        }else if (penalty > 0 && pass == true){
+            if ((gespeeldeKaart['trueNumber'] == geselecteerdeKaart[0]['trueNumber'] || gespeeldeKaart['soort'] == geselecteerdeKaart[0]['soort'] || geselecteerdeKaart[0]['soort'] == 'special')){
+                if (geselecteerdeKaart[0]['trueNumber'] == 0) {
+                    penalty = penalty + 5
+                }
+                if (geselecteerdeKaart[0]['trueNumber'] == 2) {
+                    penalty = penalty + 2
+                }
+                if (geselecteerdeKaart[0]['trueNumber'] == 1) {
+                    spelrichting = spelrichting * -1
+                }
+                if (geselecteerdeKaart[0]['trueNumber'] == 8) {
+                    beurtFunctie()
+                }
+                if (geselecteerdeKaart[0]['trueNumber'] == 7){
+                    winnaar()
+                }
+                if (geselecteerdeKaart[0]['trueNumber'] != 7 && geselecteerdeKaart[0]['trueNumber'] != 13) {
+                    winnaar()
+                    beurtFunctie()
+                }
+                pakstapel.push(gespeeldeKaart)
+                gespeeldeKaart = geselecteerdeKaart[0]
+                geselecteerdeKaart = ''
+                shuffle(pakstapel)
+                opgelegd = true
+            }
         }else if (geselecteerdeKaart[0]['trueNumber'] == 2 && gespeeldeKaart['trueNumber'] == 2){
             penalty = penalty + 2
             opgelegd = true

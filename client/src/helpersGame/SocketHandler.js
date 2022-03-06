@@ -176,7 +176,7 @@ export default class SocketHandler {
 
                 //maakt de geselecteerde kaart aan
                 child.on('pointerdown', function(pointer) {
-                    if (scene.pointer.leftButtonDown() && scene.gespeeldeKaart['trueNumber'] != 13 && scene.myTurn == true && scene.pass == false){
+                    if ((scene.pointer.leftButtonDown() && scene.gespeeldeKaart['soort'] != 'special' && scene.myTurn == true && scene.pass == false) || (scene.pointer.leftButtonDown() && scene.gespeeldeKaart['trueNumber'] == 0 && scene.myTurn == true && scene.pass == false)){
                         scene.index
                         for (var i = 0; i < scene.decks[scene.playerNumber - 1].length; i++) {
                             if (scene.decks[scene.playerNumber - 1][i]['kaart'] == child.texture.key) {
