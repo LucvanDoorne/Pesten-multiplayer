@@ -152,7 +152,15 @@ export default class SocketHandler {
                 if (scene.gespeeldeKaart['soort'] != scene.soort){
                     if (scene.soort != 'special') {
                         scene.soortText = scene.add.text(510, 95, 'SORT: ', { font: '40px Arial'})
-                        scene.soortImage = scene.add.image(720, 115, scene.soort)
+                        if (scene.soort == 'harten') {
+                            scene.soortImage = scene.add.image(720, 115, 'Hart')
+                        }else if (scene.soort == 'klaveren') {
+                            scene.soortImage = scene.add.image(720, 115, 'Klaver')
+                        }else if (scene.soort == 'ruiten') {
+                            scene.soortImage = scene.add.image(720, 115, 'Ruit')
+                        }else if (scene.soort == 'schoppen') {
+                            scene.soortImage = scene.add.image(720, 115, 'Schop')
+                        }
                         scene.soortImage.scale = 0.15
                     }
                 }

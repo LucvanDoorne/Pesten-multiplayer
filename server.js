@@ -180,9 +180,12 @@ io.on('connection', function (socket) {
                 shuffle(pakstapel[i])
                 // dit is de beginnende kaart (dit mag geen pestkaart zijn), dit maakt ook de pakstapel aan.
                 var pestkaartIndex = 0
-                while (pakstapel[i][0]['trueNumber'] == "1" || pakstapel[i][0]['trueNumber'] == "2" || pakstapel[i][0]['trueNumber'] == "7" || pakstapel[i][0]['trueNumber'] == "8" || pakstapel[i][0]['trueNumber'] == "0" || pakstapel[i][0]['trueNumber'] == "13"){
+                console.log('tot hier')
+                console.log(pakstapel[i][0])
+                while (pakstapel[i][pestkaartIndex]['trueNumber'] == 1 || pakstapel[i][pestkaartIndex]['trueNumber'] == 2 || pakstapel[i][pestkaartIndex]['trueNumber'] == 7 || pakstapel[i][pestkaartIndex]['trueNumber'] == 8 || pakstapel[i][pestkaartIndex]['trueNumber'] == 0 || pakstapel[i][pestkaartIndex]['trueNumber'] == 13){
                     pestkaartIndex++
                 }
+                console.log('tot hier 2')
                 gespeeldeKaart[i] = pakstapel[i][pestkaartIndex]
                 soortGespeeldeKaart[i] = gespeeldeKaart[i]['soort']
                 nummerGespeeldeKaart[i] = gespeeldeKaart[i]['trueNumber']
@@ -191,6 +194,7 @@ io.on('connection', function (socket) {
                 for (var j = 0; j < totalPlayers[i]; j++){
                     decks[i].push(pakstapel[i].splice(0, 7))
                 }
+                console.log('tot hier 3')
                 gameState[i] = 'started'
                 io.emit('beginGame', arg)
                 socket.emit('kaarten', decks[i], gespeeldeKaart[i], beurt[i], players[i], penalty[i], totalPlayers[i], spelrichting[i], geselecteerdeKaart[i], pass[i], arg, soortGespeeldeKaart[i])
