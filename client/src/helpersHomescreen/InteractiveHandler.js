@@ -2,6 +2,13 @@ export default class InteractiveHandler {
     constructor(scene) {
         scene.pointer = scene.input.activePointer
         scene.amountAI = 0
+        scene.roomNumber = ''
+        scene.socket.on('roomNumber', (arg1, arg2) => {
+            if (scene.socket.id == arg2) {
+                scene.roomNumber = arg1
+            }
+        }) 
+
         scene.addAIButton.on('pointerdown', () => {
             if (scene.pointer.leftButtonDown()) {
                 scene.addAIButton.setFrame(1)
@@ -11,7 +18,7 @@ export default class InteractiveHandler {
         scene.addAIButton.on('pointerup', () => {
             if (scene.pointer.leftButtonReleased()) {
                 scene.addAIButton.setFrame(0)
-                scene.socket.emit("AIup")
+                scene.socket.emit("AIup", scene.roomNumber)
             }
         })
 
@@ -28,7 +35,7 @@ export default class InteractiveHandler {
         scene.removeAIButton.on('pointerup', () => {
             if (scene.pointer.leftButtonReleased()) {
                 scene.removeAIButton.setFrame(0)
-                scene.socket.emit('AIdown')
+                scene.socket.emit('AIdown', scene.roomNumber)
             }
         })
 
@@ -49,7 +56,7 @@ export default class InteractiveHandler {
         scene.buttonStart.on('pointerup', () => {
             if (scene.pointer.leftButtonReleased()) {
                 scene.buttonStart.setFrame(0)
-                scene.socket.emit('startGame')
+                scene.socket.emit('startGame', scene.roomNumber)
             }
         })
 

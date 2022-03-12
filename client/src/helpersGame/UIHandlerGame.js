@@ -1,10 +1,10 @@
 export default class UIHandler {
     constructor(scene) {
 
-        this.buildBackground = () => {
+        /*this.buildBackground = () => {
             scene.background = scene.add.image(640,360,'background')
             scene.background.scale = 0.34
-        }
+        }*/
 
         this.buildRest = () => {
             //maakt de tafel
@@ -57,7 +57,7 @@ export default class UIHandler {
         }
  
         this.buildUI = () => {
-            this.buildBackground()
+            //this.buildBackground()
             this.buildRest()
         }
     }

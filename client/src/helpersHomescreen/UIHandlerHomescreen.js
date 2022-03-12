@@ -1,12 +1,9 @@
-import InteractiveHandler from "./InteractiveHandler"
-
 export default class UIHandler {
     constructor(scene) {
         this.amountAI = 0
         this.buildBackground = () => {
             scene.background = scene.add.image(640,360, 'background')
             scene.background.scale = 0.34
-            scene.pestenText = scene.add.text(450, 30, 'PESTEN', { font: '100px Arial'})
             //full screen button
             scene.fullscreen = scene.add.image(1264, 16, 'fullscreen', 0).setOrigin(1, 0).setInteractive()
             scene.fullscreen.on('pointerup', function(event) {
