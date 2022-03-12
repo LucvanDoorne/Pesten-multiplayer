@@ -58,9 +58,10 @@ export default class SocketHandler {
                 //scene.socket.emit('forceDisconnect')
                 scene.buttonJoinNewGame = scene.add.sprite(640, 500, 'button').setInteractive()
                 scene.buttonJoinNewGame.scale = 0.5
-                scene.buttonJoinNewGame.depht = 1003
+                scene.buttonJoinNewGame.depth = 1003
 
                 scene.joinButtonText = scene.add.text(520, 485, 'JOIN NEW LOBBY', {font: '30px Arial'})
+                scene.joinButtonText.depth = 1004
                 scene.buttonJoinNewGame.on('pointerout', function(event){
                     scene.buttonJoinNewGame.setFrame(0)
                 })
@@ -108,7 +109,7 @@ export default class SocketHandler {
                 scene.buttonJoinNewGame.scale = 0.5
                 scene.joinButtonText = scene.add.text(520, 485, 'JOIN NEW LOBBY', {font: '30px Arial'})
                 scene.joinButtonText.depth = 1004
-                scene.buttonJoinNewGame.depht = 1003
+                scene.buttonJoinNewGame.depth = 1003
                 scene.background.depth = 1000
                 scene.fullscreen.depth = 1001
                 scene.buttonJoinNewGame.on('pointerout', function(event){
@@ -148,7 +149,6 @@ export default class SocketHandler {
                     scene.keuzeText.destroy(true)
                 }
 
-                
                 if (scene.deck != '') {
                     scene.deck.destroy(true)
                 }
