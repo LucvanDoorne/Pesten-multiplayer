@@ -205,7 +205,7 @@ io.on('connection', function (socket) {
                 soortenGegooid[i][soortGespeeldeKaart[i]]++
                 pakstapel[i].splice(pestkaartIndex, 1)
                 for (var j = 0; j < totalPlayers[i]; j++){
-                    decks[i].push(pakstapel[i].splice(0, 1))
+                    decks[i].push(pakstapel[i].splice(0, 7))
                 }
                 gameState[i] = 'started'
                 io.emit('beginGame', arg)
