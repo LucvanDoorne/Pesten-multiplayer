@@ -102,7 +102,7 @@ server.use(serveStatic(__dirname + '/client/dist'))
 
 io.on('connection', function (socket) {
     console.log('A user connected: ' + socket.id)
-
+    
     // maakt de room aan (als deze er nog niet was)
     socket.on('joinRoom', (arg) => {
         io.emit('roomNumber', arg, socket.id)
@@ -138,7 +138,9 @@ io.on('connection', function (socket) {
             soortGespeeldeKaart.push('')
             nummerGespeeldeKaart.push('')
             soortenGegooid.push({'harten': 0, 'klaveren': 0, 'schoppen': 0, 'ruiten': 0, 'special': 0})
+            
         }
+
         if (gameState[roomID] == 'started') {
             io.emit('lobbyFull', socket.id, 'already started...')
         }
@@ -157,6 +159,15 @@ io.on('connection', function (socket) {
             io.emit('amountPlayers', amountPlayers[roomID], room[roomID])
             io.emit('AIamount', AIamount[roomID], room[roomID])
         }
+        console.log(beurt)
+        // dit komt door een rare bug
+        for (var i = 0; i < beurt.length; i++) {
+            if (isNaN(beurt[i])) {
+                beurt.splice(i, 1)
+            }
+        }
+
+
     })
 
 
@@ -175,35 +186,34 @@ io.on('connection', function (socket) {
     socket.on('startGame', (arg) => {
         for (var i = 0; i < room.length; i++) {
             if (room[i] == arg) {
+                for (var k = 0; k < beurt.length; k++) {
+                    if (isNaN(beurt[i])) {
+                        beurt.splice(k, 1)
+                    }
+                }
                 geselecteerdeKaart[i] = ''
                 // dit husselt de kaarten
                 shuffle(pakstapel[i])
                 // dit is de beginnende kaart (dit mag geen pestkaart zijn), dit maakt ook de pakstapel aan.
                 var pestkaartIndex = 0
-                console.log('tot hier')
-                console.log(pakstapel[i][0])
                 while (pakstapel[i][pestkaartIndex]['trueNumber'] == 1 || pakstapel[i][pestkaartIndex]['trueNumber'] == 2 || pakstapel[i][pestkaartIndex]['trueNumber'] == 7 || pakstapel[i][pestkaartIndex]['trueNumber'] == 8 || pakstapel[i][pestkaartIndex]['trueNumber'] == 0 || pakstapel[i][pestkaartIndex]['trueNumber'] == 13){
                     pestkaartIndex++
                 }
-                console.log('tot hier 2')
                 gespeeldeKaart[i] = pakstapel[i][pestkaartIndex]
                 soortGespeeldeKaart[i] = gespeeldeKaart[i]['soort']
                 nummerGespeeldeKaart[i] = gespeeldeKaart[i]['trueNumber']
                 soortenGegooid[i][soortGespeeldeKaart[i]]++
                 pakstapel[i].splice(pestkaartIndex, 1)
                 for (var j = 0; j < totalPlayers[i]; j++){
-                    decks[i].push(pakstapel[i].splice(0, 7))
+                    decks[i].push(pakstapel[i].splice(0, 1))
                 }
-                console.log('tot hier 3')
                 gameState[i] = 'started'
                 io.emit('beginGame', arg)
                 socket.emit('kaarten', decks[i], gespeeldeKaart[i], beurt[i], players[i], penalty[i], totalPlayers[i], spelrichting[i], geselecteerdeKaart[i], pass[i], arg, soortGespeeldeKaart[i])
                 io.emit('kaarten', decks[i], gespeeldeKaart[i], beurt[i], players[i], penalty[i], totalPlayers[i], spelrichting[i], geselecteerdeKaart[i], pass[i], arg, soortGespeeldeKaart[i])
-
             }
         }
-
-        
+        console.log(beurt)
     })
     
 
@@ -226,7 +236,7 @@ io.on('connection', function (socket) {
             if (room[i] == arg) {
                 if (AIamount[i] > 0) {
                     for (var j = 0; j < players.length; j++) {
-                        if (players[i][j] == 'AI' + AIamount) {
+                        if (players[i][j] == 'AI' + AIamount[i]) {
                             players[i].splice(j, 1)
                         }
                     }
@@ -261,7 +271,6 @@ io.on('connection', function (socket) {
                 geselecteerdeKaart[i] = pakstapel[i].splice(0, 1)
                 soortGeselecteerdeKaart[i] = geselecteerdeKaart[i][0]['soort']
                 nummerGeselecteerdeKaart[i] = geselecteerdeKaart[i][0]['trueNumber']
-                console.log(geselecteerdeKaart[i])
                 penalty[i] = 1
                 io.emit('kaarten', decks[i], gespeeldeKaart[i], beurt[i], players[i], penalty[i], totalPlayers[i], spelrichting[i], geselecteerdeKaart[i], pass[i], arg, soortGespeeldeKaart[i])
             }
@@ -286,7 +295,7 @@ io.on('connection', function (socket) {
     socket.on('geselecteerdeKaartTerug', (arg) => {
         for (var i = 0; i < room.length; i++) {
             if (room[i] == arg) {
-                decks[i][beurt - 1].push(geselecteerdeKaart[i][0])
+                decks[i][beurt[i] - 1].push(geselecteerdeKaart[i][0])
                 geselecteerdeKaart[i] = ''
                 io.emit('kaarten', decks[i], gespeeldeKaart[i], beurt[i], players[i], penalty[i], totalPlayers[i], spelrichting[i], geselecteerdeKaart[i], pass[i], arg, soortGespeeldeKaart[i])
             }
@@ -299,7 +308,6 @@ io.on('connection', function (socket) {
                 index = i
                 roomNumber = arg
                 checken()
-                console.log(soortenGegooid[i])
                 if (opgelegd[i] == true) {
                     opgelegd[i] = false
                     if (pass[i] == true) {
@@ -322,7 +330,7 @@ io.on('connection', function (socket) {
                     geselecteerdeKaart[i] = ''
                 }
                 if (pass[i] == false) {
-                    for (var j = 0; j < penalty; j++) {
+                    for (var j = 0; j < penalty[i]; j++) {
                         if (pakstapel[i].length < 1) {
                             socket.emit('gelijkspel', arg)
                         }
@@ -332,7 +340,7 @@ io.on('connection', function (socket) {
                 }
                 pass[i] = false
                 penalty[i] = 0
-                if (gespeeldeKaart[i]['soort'] != 'special') {
+                if (soortGespeeldeKaart[i] != 'special') {
                     beurtFunctie()
                 }
                 io.emit('kaarten', decks[i], gespeeldeKaart[i], beurt[i], players[i], penalty[i], totalPlayers[i], spelrichting[i], geselecteerdeKaart[i], pass[i], arg, soortGespeeldeKaart[i])
@@ -459,20 +467,13 @@ function beurtFunctie(){
     }else if (beurt[index] < 1) {
         beurt[index] = totalPlayers[index]
     }
+    console.log(beurt)
 }
-
-/*function boer() {
-    console.log(index)
-    console.log(gespeeldeKaart)
-    if (gespeeldeKaart[index]['trueNumber'] == 13 || gespeeldeKaart[index]['trueNumber'] == 0) {
-        gespeeldeKaart[index]['soort'] = 'special'
-    }
-}*/
 
 function checken(){
     if (decks[index][beurt[index] - 1].length == 0) {
         if (soortGeselecteerdeKaart[index] != 'special' && nummerGeselecteerdeKaart[index] != 1  && nummerGeselecteerdeKaart[index] != 2  && nummerGeselecteerdeKaart[index] != 7  && nummerGeselecteerdeKaart[index] != 8 && penalty[index] < 1) {
-            if (nummerGespeeldeKaart[index] == nummerGeselecteerdeKaart || soortGespeeldeKaart[index] == soortGeselecteerdeKaart){ 
+            if (nummerGespeeldeKaart[index] == nummerGeselecteerdeKaart[index] || soortGespeeldeKaart[index] == soortGeselecteerdeKaart[index]){ 
                 //boer()
                 pakstapel[index].push(gespeeldeKaart[index])
                 gespeeldeKaart[index] = geselecteerdeKaart[index][0]
@@ -570,7 +571,7 @@ function checken(){
             }
         }
     }else if (decks[index][beurt[index] - 1].length > 0){
-        if ((nummerGespeeldeKaart[index] == nummerGeselecteerdeKaart[index] || soortGespeeldeKaart[index] == soortGeselecteerdeKaart[index] || soortGeselecteerdeKaart == 'special') && penalty[index] < 1 ){
+        if ((nummerGespeeldeKaart[index] == nummerGeselecteerdeKaart[index] || soortGespeeldeKaart[index] == soortGeselecteerdeKaart[index] || soortGeselecteerdeKaart[index] == 'special') && penalty[index] < 1 ){
             if (nummerGeselecteerdeKaart[index] == 0) {
                 penalty[index] = penalty[index] + 5
             }
@@ -600,7 +601,7 @@ function checken(){
             shuffle(pakstapel[index])
             opgelegd[index] = true
         }else if (penalty[index] > 0 && pass[index] == true){
-            if ((nummerGespeeldeKaart[index] == nummerGeselecteerdeKaart[index] || soortGespeeldeKaart[index] == soortGeselecteerdeKaart[index] || soortGeselecteerdeKaart == 'special')){
+            if ((nummerGespeeldeKaart[index] == nummerGeselecteerdeKaart[index] || soortGespeeldeKaart[index] == soortGeselecteerdeKaart[index] || soortGeselecteerdeKaart[index] == 'special')){
                 if (nummerGeselecteerdeKaart[index] == 0) {
                     penalty[index] = penalty[index] + 5
                 }
@@ -655,7 +656,7 @@ function checken(){
             winnaar()
             beurtFunctie()
         }else if (penalty[index] == 1) {
-            if ((nummerGespeeldeKaart[index] == nummerGeselecteerdeKaart[index] || soortGespeeldeKaart[index] == soortGeselecteerdeKaart[index] || soortGeselecteerdeKaart == 'special') && penalty[index] < 1){
+            if ((nummerGespeeldeKaart[index] == nummerGeselecteerdeKaart[index] || soortGespeeldeKaart[index] == soortGeselecteerdeKaart[index] || soortGeselecteerdeKaart[index] == 'special') && penalty[index] < 1){
                 if (nummerGeselecteerdeKaart[index] == 0) {
                     penalty[index] = penalty[index] + 5
                 }
@@ -694,6 +695,13 @@ function checken(){
 function winnaar(){
     if (totalPlayers[index] == 2){
         if (decks[index][0].length == 0) {
+            for (var i = 0; i < users.length; i++) {
+                if (users[i] == players[index][0]) {
+                    users[i]['roomid'] = ''
+                }else if (users[i] == players[index][1]) {
+                    users[i]['roomid'] = ''
+                }
+            }
             positieWinnaar[index]++
             io.emit('winnaar', positieWinnaar[index], players[index][0], roomNumber)
             positieWinnaar[index]++
@@ -714,7 +722,22 @@ function winnaar(){
             opgelegd.splice(index, 1)
             positieWinnaar.splice(index, 1)
             pass.splice(index, 1)
+            soortGeselecteerdeKaart.splice(index, 1)
+            nummerGeselecteerdeKaart.splice(index, 1)
+            soortGespeeldeKaart.splice(index, 1)
+            nummerGespeeldeKaart.splice(index, 1)
+            soortenGegooid.splice(index, 1)
+
         }else if (decks[index][1].length == 0) {
+            if (decks[index][0].length == 0) {
+                for (var i = 0; i < users.length; i++) {
+                    if (users[i] == players[index][0]) {
+                        users[i]['roomid'] = ''
+                    }else if (users[i] == players[index][1]) {
+                        users[i]['roomid'] = ''
+                    }
+                }
+            }
             positieWinnaar[index]++
             io.emit('winnaar', positieWinnaar[index], players[index][1], roomNumber)
             positieWinnaar[index]++
@@ -735,6 +758,12 @@ function winnaar(){
             opgelegd.splice(index, 1)
             positieWinnaar.splice(index, 1)
             pass.splice(index, 1)
+            soortGeselecteerdeKaart.splice(index, 1)
+            nummerGeselecteerdeKaart.splice(index, 1)
+            soortGespeeldeKaart.splice(index, 1)
+            nummerGespeeldeKaart.splice(index, 1)
+            soortenGegooid.splice(index, 1)
+
         }
     }
     if (totalPlayers[index] == 3) {

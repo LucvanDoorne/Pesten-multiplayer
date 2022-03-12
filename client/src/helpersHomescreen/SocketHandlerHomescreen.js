@@ -39,9 +39,9 @@ export default class SocketHandler {
                 scene.background.depth = 1000
                 scene.fullscreen.depth = 1001
                 if (arg2 == 'full...') {
-                    scene.lobbyFullText = scene.add.text(370, 290, 'Lobby ' + arg2, {font: '100px Arial'})
+                    scene.lobbyFullText = scene.add.text(370, 290, 'Lobby full...', {font: '100px Arial'})
                 }else {
-                    scene.lobbyFullText = scene.add.text(120, 290, 'Lobby ' + arg2, {font: '100px Arial'})
+                    scene.lobbyFullText = scene.add.text(120, 290, 'Lobby already started...', {font: '100px Arial'})
                 }
 
                 scene.lobbyFullText.depth = 1001

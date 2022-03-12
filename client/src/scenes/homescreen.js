@@ -207,8 +207,8 @@ export default class Homescreen extends Phaser.Scene {
 
         // dit maakt de game
         this.socket.on('beginGame', (arg) => {
-            console.log(arg)
             if (arg == this.roomNumber) {
+                console.log(arg)
                 this.amountAIText.destroy(true)
                 this.amountPlayersText.destroy(true)
                 this.totalPlayersText.destroy(true)

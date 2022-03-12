@@ -51,10 +51,13 @@ export default class SocketHandler {
                 else if (arg1 == 3){
                     scene.winnaarText = scene.add.text(105, 330, 'Congratulations, you came in third!', {font: '60px Arial'})
                 }
-                scene.winnaarText.depth = 2
+                scene.winnaarText.depth = 1003
                 //scene.socket.emit('forceDisconnect')
                 scene.buttonJoinNewGame = scene.add.sprite(640, 500, 'button').setInteractive()
                 scene.buttonJoinNewGame.scale = 0.5
+                scene.buttonJoinNewGame.depht = 1002
+                scene.background.depth = 1000
+                scene.fullscreen.depth = 1001
                 scene.joinButtonText = scene.add.text(520, 485, 'JOIN NEW LOBBY', {font: '30px Arial'})
                 scene.buttonJoinNewGame.on('pointerout', function(event){
                     scene.buttonJoinNewGame.setFrame(0)
@@ -97,10 +100,14 @@ export default class SocketHandler {
                 scene.deck.destroy(true)
                 scene.winnaarText = scene.add.text(30, 330, 'You lost. LLLLL, NOOOOOOB, LOSER, BAD.', {font: '60px Arial'})
                 scene.winnaarText.depth = 2
+                scene.winnaarText.depth = 1003
                 //scene.socket.emit('forceDisconnect')
                 scene.buttonJoinNewGame = scene.add.sprite(640, 500, 'button').setInteractive()
                 scene.buttonJoinNewGame.scale = 0.5
                 scene.joinButtonText = scene.add.text(520, 485, 'JOIN NEW LOBBY', {font: '30px Arial'})
+                scene.buttonJoinNewGame.depht = 1002
+                scene.background.depth = 1000
+                scene.fullscreen.depth = 1001
                 scene.buttonJoinNewGame.on('pointerout', function(event){
                     scene.buttonJoinNewGame.setFrame(0)
                 })
@@ -465,13 +472,28 @@ export default class SocketHandler {
                     scene.stoel2.scale = 0.17
                     scene.stoel2.angle = 180
                     if (scene.playerNumber == 1) {
-                        scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial', color: '#00FF00'})
-                        scene.aantalKaarten2 = scene.add.text(164, 220, scene.amountCards[1], {font: '25px Arial'})
+                        if (scene.amountCards[0] > 9) {
+                            scene.aantalKaarten1 = scene.add.text(151.5, 90, scene.amountCards[0], {font: '25px Arial', color: '#00FF00'})
+                        }else {
+                            scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial', color: '#00FF00'})
+                        }
+                        if (scene.amountCards[1] > 9){
+                            scene.aantalKaarten2 = scene.add.text(151.5, 220, scene.amountCards[1], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten2 = scene.add.text(164, 220, scene.amountCards[1], {font: '25px Arial'})
+                        }
                     }
                     if (scene.playerNumber == 2) {
-                        scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
-                        scene.aantalKaarten2 = scene.add.text(164, 220, scene.amountCards[1], {font: '25px Arial', color: '#00FF00'})
-
+                        if (scene.amountCards[0] > 9) {
+                            scene.aantalKaarten1 = scene.add.text(151.5, 90, scene.amountCards[0], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
+                        }
+                        if (scene.amountCards[1] > 9){
+                            scene.aantalKaarten2 = scene.add.text(151.5, 220, scene.amountCards[1], {font: '25px Arial', color: '#00FF00'})
+                        }else {
+                            scene.aantalKaarten2 = scene.add.text(164, 220, scene.amountCards[1], {font: '25px Arial', color: '#00FF00'})
+                        }
                     }
                     scene.aantalKaarten1.depth = 4
                     scene.aantalKaarten2.depth = 4
@@ -486,23 +508,59 @@ export default class SocketHandler {
                     scene.stoel2.rotation = 2.09
                     scene.stoel2.depth = 10
                     if (scene.playerNumber == 1) {
-                        scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial', color: '#00FF00'})
-                        scene.aantalKaarten2 = scene.add.text(215, 200, scene.amountCards[1], {font: '25px Arial'})
-                        scene.aantalKaarten3 = scene.add.text(110, 200, scene.amountCards[2], {font: '25px Arial'})
+                        if (scene.amountCards[0] > 9) {
+                            scene.aantalKaarten1 = scene.add.text(151.5, 90, scene.amountCards[0], {font: '25px Arial', color: '#00FF00'})
+                        }else {
+                            scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial', color: '#00FF00'})
+                        }
+                        if (scene.amountCards[1] > 9){
+                            scene.aantalKaarten2 = scene.add.text(151.5, 220, scene.amountCards[1], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten2 = scene.add.text(164, 220, scene.amountCards[1], {font: '25px Arial'})
+                        }
+                        if (scene.amountCards[2] > 9){
+                            scene.aantalKaarten3 = scene.add.text(151.5, 220, scene.amountCards[2], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial'})
+                        }
                     }
                     if (scene.playerNumber == 2) {
-                        scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
-                        scene.aantalKaarten2 = scene.add.text(215, 200, scene.amountCards[1], {font: '25px Arial', color: '#00FF00'})
-                        scene.aantalKaarten3 = scene.add.text(110, 200, scene.amountCards[2], {font: '25px Arial'})
+                        if (scene.amountCards[0] > 9) {
+                            scene.aantalKaarten1 = scene.add.text(151.5, 90, scene.amountCards[0], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
+                        }
+                        if (scene.amountCards[1] > 9){
+                            scene.aantalKaarten2 = scene.add.text(151.5, 220, scene.amountCards[1], {font: '25px Arial', color: '#00FF00'})
+                        }else {
+                            scene.aantalKaarten2 = scene.add.text(164, 220, scene.amountCards[1], {font: '25px Arial', color: '#00FF00'})
+                        }
+                        if (scene.amountCards[2] > 9){
+                            scene.aantalKaarten3 = scene.add.text(151.5, 220, scene.amountCards[2], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial'})
+                        }
                     }
                     if (scene.playerNumber == 3) {
-                        scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
-                        scene.aantalKaarten2 = scene.add.text(215, 200, scene.amountCards[1], {font: '25px Arial'})
-                        scene.aantalKaarten3 = scene.add.text(110, 200, scene.amountCards[2], {font: '25px Arial', color: '#00FF00'})
-                    }
+                        if (scene.amountCards[0] > 9) {
+                            scene.aantalKaarten1 = scene.add.text(151.5, 90, scene.amountCards[0], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
+                        }
+                        if (scene.amountCards[1] > 9){
+                            scene.aantalKaarten2 = scene.add.text(151.5, 220, scene.amountCards[1], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten2 = scene.add.text(164, 220, scene.amountCards[1], {font: '25px Arial'})
+                        }
+                        if (scene.amountCards[2] > 9){
+                            scene.aantalKaarten3 = scene.add.text(151.5, 220, scene.amountCards[2], {font: '25px Arial', color: '#00FF00'})
+                        }else {
+                            scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial', color: '#00FF00'})
+                        }
                     scene.aantalKaarten1.depth = 4
                     scene.aantalKaarten2.depth = 4
                     scene.aantalKaarten3.depth = 4
+                    }
                 }else if (scene.aantalSpelers == 4) {
                     scene.stoel1 = scene.add.sprite(170, 38, 'chair')
                     scene.stoel1.scale = 0.17
@@ -517,28 +575,92 @@ export default class SocketHandler {
                     scene.stoel2.angle = 90
                     scene.stoel3.depth = 100
                     if (scene.playerNumber == 1) {
-                        scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial', color: '#00FF00'})
-                        scene.aantalKaarten2 = scene.add.text(230, 154, scene.amountCards[1], {font: '25px Arial'})
-                        scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial'})
-                        scene.aantalKaarten4 = scene.add.text(90, 154, scene.amountCards[3], {font: '25px Arial'})
+                        if (scene.amountCards[0] > 9) {
+                            scene.aantalKaarten1 = scene.add.text(151.5, 90, scene.amountCards[0], {font: '25px Arial', color: '#00FF00'})
+                        }else {
+                            scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial', color: '#00FF00'})
+                        }
+                        if (scene.amountCards[1] > 9){
+                            scene.aantalKaarten2 = scene.add.text(151.5, 220, scene.amountCards[1], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten2 = scene.add.text(164, 220, scene.amountCards[1], {font: '25px Arial'})
+                        }
+                        if (scene.amountCards[2] > 9){
+                            scene.aantalKaarten3 = scene.add.text(151.5, 220, scene.amountCards[2], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial'})
+                        }
+                        if (scene.amountCards[3] > 9){
+                            scene.aantalKaarten4 = scene.add.text(151.5, 220, scene.amountCards[3], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten4 = scene.add.text(164, 220, scene.amountCards[3], {font: '25px Arial'})
+                        }
                     }
                     if (scene.playerNumber == 2) {
-                        scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
-                        scene.aantalKaarten2 = scene.add.text(230, 154, scene.amountCards[1], {font: '25px Arial', color: '#00FF00'})
-                        scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial'})
-                        scene.aantalKaarten4 = scene.add.text(90, 154, scene.amountCards[3], {font: '25px Arial'})
+                        if (scene.amountCards[0] > 9) {
+                            scene.aantalKaarten1 = scene.add.text(151.5, 90, scene.amountCards[0], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
+                        }
+                        if (scene.amountCards[1] > 9){
+                            scene.aantalKaarten2 = scene.add.text(151.5, 220, scene.amountCards[1], {font: '25px Arial', color: '#00FF00'})
+                        }else {
+                            scene.aantalKaarten2 = scene.add.text(164, 220, scene.amountCards[1], {font: '25px Arial', color: '#00FF00'})
+                        }
+                        if (scene.amountCards[2] > 9){
+                            scene.aantalKaarten3 = scene.add.text(151.5, 220, scene.amountCards[2], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial'})
+                        }
+                        if (scene.amountCards[3] > 9){
+                            scene.aantalKaarten4 = scene.add.text(151.5, 220, scene.amountCards[3], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten4 = scene.add.text(164, 220, scene.amountCards[3], {font: '25px Arial'})
+                        }
                     }
                     if (scene.playerNumber == 3) {
-                        scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
-                        scene.aantalKaarten2 = scene.add.text(230, 154, scene.amountCards[1], {font: '25px Arial'})
-                        scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial', color: '#00FF00'})
-                        scene.aantalKaarten4 = scene.add.text(90, 154, scene.amountCards[3], {font: '25px Arial'})
+                        if (scene.amountCards[0] > 9) {
+                            scene.aantalKaarten1 = scene.add.text(151.5, 90, scene.amountCards[0], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
+                        }
+                        if (scene.amountCards[1] > 9){
+                            scene.aantalKaarten2 = scene.add.text(151.5, 220, scene.amountCards[1], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten2 = scene.add.text(164, 220, scene.amountCards[1], {font: '25px Arial'})
+                        }
+                        if (scene.amountCards[2] > 9){
+                            scene.aantalKaarten3 = scene.add.text(151.5, 220, scene.amountCards[2], {font: '25px Arial', color: '#00FF00'})
+                        }else {
+                            scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial', color: '#00FF00'})
+                        }
+                        if (scene.amountCards[3] > 9){
+                            scene.aantalKaarten4 = scene.add.text(151.5, 220, scene.amountCards[3], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten4 = scene.add.text(164, 220, scene.amountCards[3], {font: '25px Arial'})
+                        }
                     }
                     if (scene.playerNumber == 4) {
-                        scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
-                        scene.aantalKaarten2 = scene.add.text(230, 154, scene.amountCards[1], {font: '25px Arial'})
-                        scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial'})
-                        scene.aantalKaarten4 = scene.add.text(90, 154, scene.amountCards[3], {font: '25px Arial', color: '#00FF00'})
+                        if (scene.amountCards[0] > 9) {
+                            scene.aantalKaarten1 = scene.add.text(151.5, 90, scene.amountCards[0], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
+                        }
+                        if (scene.amountCards[1] > 9){
+                            scene.aantalKaarten2 = scene.add.text(151.5, 220, scene.amountCards[1], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten2 = scene.add.text(164, 220, scene.amountCards[1], {font: '25px Arial'})
+                        }
+                        if (scene.amountCards[2] > 9){
+                            scene.aantalKaarten3 = scene.add.text(151.5, 220, scene.amountCards[2], {font: '25px Arial'})
+                        }else {
+                            scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial'})
+                        }
+                        if (scene.amountCards[3] > 9){
+                            scene.aantalKaarten4 = scene.add.text(151.5, 220, scene.amountCards[3], {font: '25px Arial', color: '#00FF00'})
+                        }else {
+                            scene.aantalKaarten4 = scene.add.text(164, 220, scene.amountCards[3], {font: '25px Arial', color: '#00FF00'})
+                        }
                     }
                     scene.aantalKaarten1.depth = 4
                     scene.aantalKaarten2.depth = 4
