@@ -43,6 +43,7 @@ export default class SocketHandler {
                 }else {
                     scene.lobbyFullText = scene.add.text(120, 290, 'Lobby already started...', {font: '100px Arial'})
                 }
+                scene.lobbyFullText.depth = 3
 
                 scene.lobbyFullText.depth = 1001
                 scene.buttonJoinNewGame = scene.add.sprite(640, 500, 'button').setInteractive()
