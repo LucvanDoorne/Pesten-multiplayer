@@ -1,9 +1,13 @@
 {
   "dependencies": {
+    "@tensorflow/tfjs": "^3.14.0",
     "connect": "^3.7.0",
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "nodemon": "^2.0.15",
+    "onnxjs": "^0.1.8",
+    "onnxruntime": "^1.7.0",
+    "onnxruntime-node": "^1.10.0",
     "shuffle-array": "^1.0.1",
     "socket.io": "^4.4.1",
     "st": "^3.0.0"
