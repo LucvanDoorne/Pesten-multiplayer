@@ -550,7 +550,7 @@ export default class SocketHandler {
                         if (scene.amountCards[2] > 9){
                             scene.aantalKaarten3 = scene.add.text(107.5, 197.5, scene.amountCards[2], {font: '25px Arial'})
                         }else {
-                            scene.aantalKaarten3 = scene.add.text(164, 200, scene.amountCards[2], {font: '25px Arial'})
+                            scene.aantalKaarten3 = scene.add.text(110, 200, scene.amountCards[2], {font: '25px Arial'})
                         }
                     }
                     if (scene.playerNumber == 3) {
