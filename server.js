@@ -329,6 +329,8 @@ io.on('connection', function (socket) {
                 }
                 geselecteerdeKaart[i] = ''
                 geselecteerdeKaart[i] = pakstapel[i].splice(0, 1)
+                soortGeselecteerdeKaart[i] = geselecteerdeKaart[i]['soort']
+                nummerGeselecteerdeKaart[i] = geselecteerdeKaart[i]['trueNumber']
                 penalty[i] = 1
                 io.emit('kaarten', decks[i], gespeeldeKaart[i], beurt[i], players[i], penalty[i], totalPlayers[i], spelrichting[i], geselecteerdeKaart[i], pass[i], arg, soortGespeeldeKaart[i])
             }
@@ -1222,13 +1224,13 @@ async function AI() {
                 }  
             }
 
-            /*if (data == 0 && gespeeldeKaart[index]['trueNumber'] == 2) {
+            if (data == 0 && gespeeldeKaart[index]['trueNumber'] == 2) {
                 var pakstapelKaart = await resolveAfter5Seconds(pakstapel[index].splice(0, 1))
                 decks[index][beurt[index] - 1].push(pakstapelKaart[0])
                 beurtFunctie()
                 AI()
                 io.emit('kaarten', decks[index], gespeeldeKaart[index], beurt[index], players[index], penalty[index], totalPlayers[index], spelrichting[index], geselecteerdeKaart[index], pass[index], room[index], soortGespeeldeKaart[index])
-            }*/
+            }
 
             if (penalty[index] > 0 && opgelegd[index] == false && gespeeldeKaart[index]['trueNumber'] != 0) {
                 for (var i = 0; i < penalty[index]; i++) {
