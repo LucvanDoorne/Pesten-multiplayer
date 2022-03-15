@@ -1148,9 +1148,9 @@ async function AI() {
                     io.emit('kaarten', decks[index], gespeeldeKaart[index], beurt[index], players[index], penalty[index], totalPlayers[index], spelrichting[index], geselecteerdeKaart[index], pass[index], room[index], soortGespeeldeKaart[index])   
                 }
                 else if (gespeeldeKaart[index]['trueNumber'] == 13) {
-                    /*beurtFunctie()
+                    beurtFunctie()
                     winnaar()
-                    AI()*/
+                    AI()
 
                     io.emit('kaarten', decks[index], gespeeldeKaart[index], beurt[index], players[index], penalty[index], totalPlayers[index], spelrichting[index], geselecteerdeKaart[index], pass[index], room[index], soortGespeeldeKaart[index])
                 }
@@ -1171,9 +1171,9 @@ async function AI() {
                     winnaar()
                     io.emit('kaarten', decks[index], gespeeldeKaart[index], beurt[index], players[index], penalty[index], totalPlayers[index], spelrichting[index], geselecteerdeKaart[index], pass[index], room[index], soortGespeeldeKaart[index])    
                 }else if (gespeeldeKaart[index]['trueNumber'] == 13){
-                    /*beurtFunctie()
+                    beurtFunctie()
                     AI()
-                    winnaar()*/
+                    winnaar()
                     io.emit('kaarten', decks[index], gespeeldeKaart[index], beurt[index], players[index], penalty[index], totalPlayers[index], spelrichting[index], geselecteerdeKaart[index], pass[index], room[index], soortGespeeldeKaart[index])
                 }  
             }
@@ -1193,9 +1193,9 @@ async function AI() {
                     winnaar()
                     io.emit('kaarten', decks[index], gespeeldeKaart[index], beurt[index], players[index], penalty[index], totalPlayers[index], spelrichting[index], geselecteerdeKaart[index], pass[index], room[index], soortGespeeldeKaart[index])    
                 }else if (gespeeldeKaart[index]['trueNumber'] == 13){
-                    /*beurtFunctie()
+                    beurtFunctie()
                     AI()
-                    winnaar()*/
+                    winnaar()
                     io.emit('kaarten', decks[index], gespeeldeKaart[index], beurt[index], players[index], penalty[index], totalPlayers[index], spelrichting[index], geselecteerdeKaart[index], pass[index], room[index], soortGespeeldeKaart[index])
                 }  
             }
@@ -1215,9 +1215,9 @@ async function AI() {
                     winnaar()
                     io.emit('kaarten', decks[index], gespeeldeKaart[index], beurt[index], players[index], penalty[index], totalPlayers[index], spelrichting[index], geselecteerdeKaart[index], pass[index], room[index], soortGespeeldeKaart[index])
                 }else if (gespeeldeKaart[index]['trueNumber'] == 13) {
-                    /*beurtFunctie()
+                    beurtFunctie()
                     AI()
-                    winnaar()*/
+                    winnaar()
                     io.emit('kaarten', decks[index], gespeeldeKaart[index], beurt[index], players[index], penalty[index], totalPlayers[index], spelrichting[index], geselecteerdeKaart[index], pass[index], room[index], soortGespeeldeKaart[index])
                 }  
             }
