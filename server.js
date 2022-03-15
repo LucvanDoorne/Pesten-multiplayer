@@ -328,10 +328,10 @@ io.on('connection', function (socket) {
                     decks[i][beurt[i] - 1].push(geselecteerdeKaart[i][0])
                 }
                 geselecteerdeKaart[i] = ''
-                geselecteerdeKaart[i] = pakstapel[i].splice(0, 1)
-                soortGeselecteerdeKaart[i] = geselecteerdeKaart[i]['soort']
-                nummerGeselecteerdeKaart[i] = geselecteerdeKaart[i]['trueNumber']
-                penalty[i] = 1
+                pakstapelKaart = pakstapel[i].splice(0, 1)
+                decks[i][beurt[i] - 1].push(pakstapelKaart[0])
+                beurtFunctie()
+                AI()
                 io.emit('kaarten', decks[i], gespeeldeKaart[i], beurt[i], players[i], penalty[i], totalPlayers[i], spelrichting[i], geselecteerdeKaart[i], pass[i], arg, soortGespeeldeKaart[i])
             }
         }
