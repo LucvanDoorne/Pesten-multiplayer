@@ -6,6 +6,7 @@ export default class UIHandler {
             scene.background.scale = 0.34
         }*/
 
+
         this.buildRest = () => {
             //maakt de tafel
             scene.table = scene.add.image(170, 170, 'Table')

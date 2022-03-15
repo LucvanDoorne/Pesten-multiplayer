@@ -37,6 +37,7 @@ export default class UIHandler {
         this.amountPlayerText = () => {
             scene.amountPlayersText = scene.add.text(70, 350, 'Amount of humans connected: ', {font: '35px Arial'})
             scene.totalPlayersText = scene.add.text(185, 220, 'Total players: ', {font: '35px Arial'})
+
         }
         
         this.buildUI = () => {

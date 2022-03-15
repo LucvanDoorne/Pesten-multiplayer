@@ -125,11 +125,14 @@ export default class Homescreen extends Phaser.Scene {
         this.joinButton.on('pointerup', () => {
             if (this.pointer.leftButtonReleased()) {
                 this.joinButton.setFrame(0)
-                if (roomID.text.length == 4) {
+                if (roomID.text.length == 4 && this.joinedRoom == false) {
+                    this.joinedRoom = true
                     // maakt de lobby aan
                     this.SocketHandlerHomescreen = new SocketHandlerHomescreen(this)
                     this.UIHandlerHomescreen = new UIHandlerHomescreen(this)
                     this.UIHandlerHomescreen.buildUI()
+                    this.roomText = this.add.text(320, 30, 'Room number: '+ roomID.text, { font: '70px Arial'})
+                    this.roomText.depth = 3
                     this.InteractiveHandler = new InteractiveHandler(this)
                     this.SocketHandlerGame = new SocketHandlerGame(this)
                     this.UIHandlerGame = new UIHandlerGame(this)
@@ -151,6 +154,8 @@ export default class Homescreen extends Phaser.Scene {
                 this.SocketHandlerHomescreen = new SocketHandlerHomescreen(this)
                 this.UIHandlerHomescreen = new UIHandlerHomescreen(this)
                 this.UIHandlerHomescreen.buildUI()
+                this.roomText = this.add.text(320, 30, 'Room number: '+ roomID.text, { font: '70px Arial'})
+                this.roomText.depth = 3
                 this.InteractiveHandler = new InteractiveHandler(this)
                 this.SocketHandlerGame = new SocketHandlerGame(this)
                 this.UIHandlerGame = new UIHandlerGame(this)
@@ -176,13 +181,6 @@ export default class Homescreen extends Phaser.Scene {
             }
         }, this)
 
-        this.joinButton.on('pointerup', () => {
-            if (this.pointer.leftButtonReleased()) {
-                this.joinButton.setFrame(0)
-                this.socket.emit('startGame', roomID.text)
-            }
-
-        })
 
         this.typeroomText = this.add.text(350, 200, 'Type your room ID:', { font: '70px Arial'})
         
@@ -208,7 +206,7 @@ export default class Homescreen extends Phaser.Scene {
         // dit maakt de game
         this.socket.on('beginGame', (arg) => {
             if (arg == this.roomNumber) {
-                console.log(arg)
+                this.roomText.destroy(true)
                 this.amountAIText.destroy(true)
                 this.amountPlayersText.destroy(true)
                 this.totalPlayersText.destroy(true)
