@@ -637,14 +637,14 @@ export default class SocketHandler {
                             scene.aantalKaarten1 = scene.add.text(164, 90, scene.amountCards[0], {font: '25px Arial'})
                         }
                         if (scene.amountCards[1] > 9){
-                            scene.aantalKaarten2 = scene.add.text(227, 154, scene.amountCards[1], {font: '25px Arial', color: '#00FF00'})
+                            scene.aantalKaarten2 = scene.add.text(227, 154, scene.amountCards[1], {font: '25px Arial'})
                         }else {
-                            scene.aantalKaarten2 = scene.add.text(230, 154, scene.amountCards[1], {font: '25px Arial', color: '#00FF00'})
+                            scene.aantalKaarten2 = scene.add.text(230, 154, scene.amountCards[1], {font: '25px Arial'})
                         }
                         if (scene.amountCards[2] > 9){
-                            scene.aantalKaarten3 = scene.add.text(157.5, 220, scene.amountCards[2], {font: '25px Arial'})
+                            scene.aantalKaarten3 = scene.add.text(157.5, 220, scene.amountCards[2], {font: '25px Arial', color: '#00FF00'})
                         }else {
-                            scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial'})
+                            scene.aantalKaarten3 = scene.add.text(164, 220, scene.amountCards[2], {font: '25px Arial', color: '#00FF00'})
                         }
                         if (scene.amountCards[3] > 9){
                             scene.aantalKaarten4 = scene.add.text(93, 154, scene.amountCards[3], {font: '25px Arial'})
