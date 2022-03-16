@@ -381,6 +381,7 @@ export default class SocketHandler {
                 }            
 
                 // zorgt ervoor dat de 'pass' knop zichtbaar is wanneer het jouw beurt is
+                console.log(scene.penalty)
                 if (scene.myTurn == true && scene.penalty < 1 && scene.soort != 'special') {
                     scene.buttonPass.destroy(true)
                     scene.passText.destroy(true)
