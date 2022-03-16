@@ -247,11 +247,9 @@ io.on('connection', function (socket) {
             if (room[i] == arg) {
                 if (totalPlayers[i] > 1) {
                     shuffle(players[i])
-                    console.log(players[i])
                     while (players[i][0] == 'AI') {
                         var speler = players[i].splice(0, 1)
                         players[i].push(speler[0])
-                        console.log(players[i])
                     }
                     for (var k = 0; k < beurt.length; k++) {
                         if (isNaN(beurt[i])) {
