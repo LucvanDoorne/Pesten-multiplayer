@@ -185,7 +185,7 @@ export default class SocketHandler {
                 scene.backcard = scene.add.image(730, 290, 'backcard').setInteractive()
                 scene.backcard.scale = 0.2
                 scene.backcard.on('pointerdown', function(event) {
-                    if (scene.pointer.leftButtonDown() && scene.myTurn == true) {
+                    if (scene.pointer.leftButtonDown() && scene.myTurn == true && scene.penalty == 0) {
                         scene.buttonPass.destroy(true)
                         scene.passText.destroy(true)
                         if (scene.geselecteerdeKaart != undefined) {
