@@ -43,13 +43,12 @@ export default class SocketHandler {
                 }else {
                     scene.lobbyFullText = scene.add.text(120, 290, 'Lobby already started...', {font: '100px Arial'})
                 }
-                scene.lobbyFullText.depth = 1005
-
                 scene.lobbyFullText.depth = 1001
                 scene.buttonJoinNewGame = scene.add.sprite(640, 500, 'button').setInteractive()
                 scene.buttonJoinNewGame.scale = 0.5
                 scene.buttonJoinNewGame.depth = 1001
                 scene.joinButtonText = scene.add.text(530, 490, 'JOIN AN OTHER LOBBY', {font: '20px Arial'})
+                scene.joinButtonText.depth = 1005
                 scene.buttonJoinNewGame.on('pointerout', function(event){
                     scene.buttonJoinNewGame.setFrame(0)
                 })
