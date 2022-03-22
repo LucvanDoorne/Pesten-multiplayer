@@ -184,8 +184,8 @@ export default class SocketHandler {
                 scene.backcard.destroy(true)
                 scene.backcard = scene.add.image(730, 290, 'backcard').setInteractive()
                 scene.backcard.scale = 0.2
-                scene.backcard.on('pointerdown', function(event) {
-                    if (scene.pointer.leftButtonDown() && scene.myTurn == true && scene.penalty == 0) {
+                scene.backcard.on('pointerup', function(event) {
+                    if (scene.pointer.leftButtonReleased() && scene.myTurn == true && scene.penalty == 0) {
                         scene.buttonPass.destroy(true)
                         scene.passText.destroy(true)
                         if (scene.geselecteerdeKaart != undefined) {
@@ -222,8 +222,8 @@ export default class SocketHandler {
                 }
 
                 //zorgt dat de geselecteerde kaart weer terug gaat als er op geklikt wordt
-                scene.geselecteerdeKaartImage.on('pointerdown', function(event) {
-                    if (scene.pointer.leftButtonDown() && scene.pass == false){
+                scene.geselecteerdeKaartImage.on('pointerup', function(event) {
+                    if (scene.pointer.leftButtonReleased() && scene.pass == false){
                         scene.geselecteerdeKaartImage.destroy(true)
                         scene.playText.destroy(true)
                         scene.buttonPlay.destroy(true)
@@ -284,8 +284,8 @@ export default class SocketHandler {
                     })
 
                     //maakt de geselecteerde kaart aan
-                    child.on('pointerdown', function(pointer) {
-                        if ((scene.pointer.leftButtonDown() && scene.soort != 'special' && scene.myTurn == true && scene.pass == false) || (scene.pointer.leftButtonDown() && scene.gespeeldeKaart['trueNumber'] == 0 && scene.myTurn == true && scene.pass == false && scene.penalty > 0) || (scene.pointer.leftButtonDown() && scene.gespeeldeKaart['trueNumber'] == 2 && scene.myTurn == true && scene.pass == false && scene.penalty > 0)){
+                    child.on('pointerup', function(pointer) {
+                        if ((scene.pointer.leftButtonReleased() && scene.soort != 'special' && scene.myTurn == true && scene.pass == false) || (scene.pointer.leftButtonReleased() && scene.gespeeldeKaart['trueNumber'] == 0 && scene.myTurn == true && scene.pass == false && scene.penalty > 0) || (scene.pointer.leftButtonReleased() && scene.gespeeldeKaart['trueNumber'] == 2 && scene.myTurn == true && scene.pass == false && scene.penalty > 0)){
                             scene.index
                             for (var i = 0; i < scene.decks[scene.playerNumber - 1].length; i++) {
                                 if (scene.decks[scene.playerNumber - 1][i]['kaart'] == child.texture.key) {

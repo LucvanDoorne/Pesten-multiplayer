@@ -82,10 +82,10 @@ export default class Homescreen extends Phaser.Scene {
         this.load.image('Hart', 'src/assets/hart.png')
         this.load.image('Ruit', 'src/assets/ruit.png')
         this.load.spritesheet('fullscreen', 'src/assets/fullscreen.png', { frameWidth: 64, frameHeight: 64 })
+        this.load.image('blackbackground', 'src/assets/blackbackground.png')
     }
 
     create() {
-
         this.joinedRoom = false
         this.roomNumber = ''
         // zorgt ervoor dat multiplayer werkt
@@ -102,6 +102,8 @@ export default class Homescreen extends Phaser.Scene {
                 this.scene.restart()
             }
         })
+
+        
 
         // dit is het beginscherm waar je de code kan invoeren
         this.pointer = this.input.activePointer
@@ -182,9 +184,114 @@ export default class Homescreen extends Phaser.Scene {
         }, this)
 
 
-        this.typeroomText = this.add.text(350, 200, 'Type your room ID:', { font: '70px Arial'})
+        this.typeroomText = this.add.text(75, 170, 'Type your room ID (4-digit number):', { font: '70px Arial'})
         
-        var roomID = this.add.text(640, 350, '', { font: '60px Arial'})
+        var roomID = this.add.text(640, 285, '', { font: '60px Arial'})
+
+        this.backgroundN1 = this.add.sprite(100, 450, 'blackbackground').setInteractive()
+        this.backgroundN1.scale = 0.35
+        this.backgroundN1.on('pointerup', () => {
+            if (this.pointer.leftButtonReleased() && roomID.text.length < 4) {
+                roomID.text += '1'
+                roomID.x = roomID.x - 17
+            }
+        })
+
+        this.backgroundN2 = this.add.sprite(200, 450, 'blackbackground').setInteractive()
+        this.backgroundN2.scale = 0.35
+        this.backgroundN2.on('pointerup', () => {
+            if (this.pointer.leftButtonReleased() && roomID.text.length < 4) {
+                roomID.text += '2'
+                roomID.x = roomID.x - 17
+            }
+        })
+        this.backgroundN3 = this.add.sprite(300, 450, 'blackbackground').setInteractive()
+        this.backgroundN3.scale = 0.35
+        this.backgroundN3.on('pointerup', () => {
+            if (this.pointer.leftButtonReleased() && roomID.text.length < 4) {
+                roomID.text += '3'
+                roomID.x = roomID.x - 17
+            }
+        })
+        this.backgroundN4 = this.add.sprite(400, 450, 'blackbackground').setInteractive()
+        this.backgroundN4.scale = 0.35
+        this.backgroundN4.on('pointerup', () => {
+            if (this.pointer.leftButtonReleased() && roomID.text.length < 4) {
+                roomID.text += '4'
+                roomID.x = roomID.x - 17
+            }
+        })
+        this.backgroundN5 = this.add.sprite(500, 450, 'blackbackground').setInteractive()
+        this.backgroundN5.scale = 0.35
+        this.backgroundN5.on('pointerup', () => {
+            if (this.pointer.leftButtonReleased() && roomID.text.length < 4) {
+                roomID.text += '5'
+                roomID.x = roomID.x - 17
+            }
+        })
+        this.backgroundN6 = this.add.sprite(600, 450, 'blackbackground').setInteractive()
+        this.backgroundN6.scale = 0.35
+        this.backgroundN6.on('pointerup', () => {
+            if (this.pointer.leftButtonReleased() && roomID.text.length < 4) {
+                roomID.text += '6'
+                roomID.x = roomID.x - 17
+            }
+        })
+        this.backgroundN7 = this.add.sprite(700, 450, 'blackbackground').setInteractive()
+        this.backgroundN7.scale = 0.35
+        this.backgroundN7.on('pointerup', () => {
+            if (this.pointer.leftButtonReleased() && roomID.text.length < 4) {
+                roomID.text += '7'
+                roomID.x = roomID.x - 17
+            }
+        })
+        this.backgroundN8 = this.add.sprite(800, 450, 'blackbackground').setInteractive()
+        this.backgroundN8.scale = 0.35
+        this.backgroundN8.on('pointerup', () => {
+            if (this.pointer.leftButtonReleased() && roomID.text.length < 4) {
+                roomID.text += '8'
+                roomID.x = roomID.x - 17
+            }
+        })
+        this.backgroundN9 = this.add.sprite(900, 450, 'blackbackground').setInteractive()
+        this.backgroundN9.scale = 0.35
+        this.backgroundN9.on('pointerup', () => {
+            if (this.pointer.leftButtonReleased() && roomID.text.length < 4) {
+                roomID.text += '9'
+                roomID.x = roomID.x - 17
+            }
+        })
+        this.backgroundN10 = this.add.sprite(1000, 450, 'blackbackground').setInteractive()
+        this.backgroundN10.scale = 0.35
+        this.backgroundN10.on('pointerup', () => {
+            if (this.pointer.leftButtonReleased() && roomID.text.length < 4) {
+                roomID.text += '0'
+                roomID.x = roomID.x - 17
+            }
+        })
+        this.backgroundN11 = this.add.sprite(1150, 450, 'blackbackground').setInteractive()
+        this.backgroundN11.scaleY = 0.35
+        this.backgroundN11.scaleX= 0.7
+        this.backgroundN11.on('pointerup', () => {
+            if (this.pointer.leftButtonReleased() && roomID.text.length > 0) {
+                roomID.text = roomID.text.substr(0, roomID.text.length - 1)
+                roomID.x = roomID.x + 17
+            }
+        })
+        this.backgroundN1.depth = -1
+        this.backgroundN2.depth = -1
+        this.backgroundN3.depth = -1
+        this.backgroundN4.depth = -1
+        this.backgroundN5.depth = -1
+        this.backgroundN6.depth = -1
+        this.backgroundN7.depth = -1
+        this.backgroundN8.depth = -1
+        this.backgroundN9.depth = -1
+        this.backgroundN10.depth = -1
+        this.backgroundN11.depth = -1
+
+        this.numbersText = this.add.text(85, 427.5, '1      2      3      4      5      6      7      8      9      0      BACK', { font: '45px Arial'})
+        
 
         this.input.keyboard.on('keydown', function (event) {
 
