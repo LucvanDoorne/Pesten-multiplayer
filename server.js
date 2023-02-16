@@ -11,6 +11,12 @@ const onnx = require('onnxruntime')
 const { data, input } = require('@tensorflow/tfjs')
 
 // nodige variablen voor de game, dit zijn allemaal arrays vanwege de rooms
+var array = []
+
+for (n = 2; n <= 10; n + 1){
+    array.push(n)
+}
+print(array)
 var roomNumber
 var output
 var gameState = []
@@ -308,7 +314,7 @@ io.on('connection', function (socket) {
                     pakstapel[i].splice(pestkaartIndex, 1)
                     // de kaarten worden uitgedeeld
                     for (var j = 0; j < totalPlayers[i]; j++){
-                        decks[i].push(pakstapel[i].splice(0, 1))
+                        decks[i].push(pakstapel[i].splice(0, 7))
                     }
                     gameState[i] = 'started'
                     io.emit('beginGame', arg)
